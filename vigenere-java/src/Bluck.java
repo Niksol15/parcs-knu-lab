@@ -17,7 +17,7 @@ public class Bluck {
         var dataByWorker = prepareData(plaintext, key);
 
         var info = new AMInfo(task, null);
-        LinkedList<channel> channels = new LinkedList<>();
+        var channels = new LinkedList<channel>();
         for (var data : dataByWorker) {
             var p = info.createPoint();
             var c = p.createChannel();
@@ -28,7 +28,7 @@ public class Bluck {
 
         var encrypted = new String();
         System.out.println("Waiting for result...");
-        for (var c : channels) {
+        for (var c: channels) {
             var res = (String) c.readObject();
             encrypted += res;
         }

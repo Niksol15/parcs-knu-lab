@@ -4,6 +4,11 @@ import java.io.*;
 public class Vigenere implements AM {
 
     String encrypt(DataToEncrypt data) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            System.out.println(ex);
+        }
         return data.plaintext;
     }
 
