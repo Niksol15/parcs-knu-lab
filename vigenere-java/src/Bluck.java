@@ -5,7 +5,7 @@ import java.nio.file.*;
 import parcs.*;
 
 public class Bluck {
-    private final static int WORKERS = 2;
+    private final static int WORKERS = 3;
     private final static Path KEY_FILENAME = Paths.get("../key.txt");
     private final static Path TEXT_FILENAME = Paths.get("../plaintext.txt");
 
