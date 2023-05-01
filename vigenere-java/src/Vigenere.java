@@ -11,19 +11,19 @@ public class Vigenere implements AM {
             result += key;
         }
         result += key.substring(0, residue);
-        System.out.println(result);
+        System.out.println("Expanded key = " + result);
 
         return result;
     }
 
 
     private char[][] buildTable() {
-        var tableSize = (int)'z' - (int)'a' + 1;
+        var tableSize = (int) 'z' - (int) 'a' + 1;
         var table = new char[tableSize][tableSize];
 
         for (int i = 0; i < tableSize; ++i) {
             for (int j = 0; j < tableSize; ++j) {
-                table[i][j] = (char)('a' + (i + j) % tableSize);
+                table[i][j] = (char) ('a' + (i + j) % tableSize);
             }
         }
 
@@ -34,12 +34,12 @@ public class Vigenere implements AM {
         var expandedKey = expandKey(data.key, data.plaintext.length());
         var table = buildTable();
         var result = new String();
-        for(int i = 0; i < data.plaintext.length(); ++i) {
-            int x = (int)data.plaintext.charAt(i) - (int)'a';
-            int y = (int)expandedKey.charAt(i) - (int)'a';
-            System.out.format("table[x = %d] = " + data.plaintext.charAt(i), x);
-            System.out.format("table[y = %d] = " + expandedKey.charAt(i), y);
-            System.out.format("table[%d][%d] = " + table[x][y], x, y);
+        for (int i = 0; i < data.plaintext.length(); ++i) {
+            int x = (int) data.plaintext.charAt(i) - (int) 'a';
+            int y = (int) expandedKey.charAt(i) - (int) 'a';
+            System.out.format("table[x = %d] = " + data.plaintext.charAt(i) + "\n", x);
+            System.out.format("table[y = %d] = " + expandedKey.charAt(i) + "\n", y);
+            System.out.format("table[%d][%d] = " + table[x][y] + "\n", x, y);
             result += table[x][y];
         }
 
