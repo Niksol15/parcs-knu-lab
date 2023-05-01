@@ -22,7 +22,7 @@ public class Bluck {
 
         String plaintext = deleteEndNewLine(Files.readString(TEXT_FILENAME).toLowerCase());
         String key = deleteEndNewLine(Files.readString(KEY_FILENAME).toLowerCase());
-        var dataByWorker = prepareData(plaintext, key);
+        var dataByWorker = prepareData(plaintext, key, WORKERS);
 
         var info = new AMInfo(task, null);
         var channels = new LinkedList<channel>();
@@ -44,23 +44,21 @@ public class Bluck {
         task.end();
     }
 
-    private static List<DataToEncrypt> prepareData(String plaintext, String key) {
+    private static List<DataToEncrypt> prepareData(String plaintext, String key, int workers) {
         var result = new LinkedList<DataToEncrypt>();
-        var charPerWorker = plaintext.length() / WORKERS;
+        var charPerWorker = plaintext.length() / workers;
         int currPos = 0;
         int endPos = 0;
-        for (int i = 0; i < WORKERS; ++i) {
+        for (int i = 0; i < workers; ++i) {
             if (currPos + charPerWorker > plaintext.length()) {
                 endPos = plaintext.length();
             } else {
                 endPos = currPos + charPerWorker;
             }
             var str = plaintext.substring(currPos, endPos);
-            System.out.println(str);
 
             var indx = currPos % key.length();
             var actualKey = key.substring(indx) + key.substring(0, indx);
-            System.out.println(actualKey);
 
             var data = new DataToEncrypt(str, actualKey);
             result.add(data);
