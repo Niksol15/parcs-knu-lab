@@ -11,7 +11,7 @@ public class Bluck {
 
     private static String deleteEndNewLine(String str) {
         if (str.charAt(str.length() - 1) == '\n') {
-            return str.substring(0, s.length() - 1);
+            return str.substring(0, str.length() - 1);
         }
         return str;
     }
