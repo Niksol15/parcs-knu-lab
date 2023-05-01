@@ -9,12 +9,19 @@ public class Bluck {
     private final static Path KEY_FILENAME = Paths.get("../key.txt");
     private final static Path TEXT_FILENAME = Paths.get("../plaintext.txt");
 
+    private static String deleteEndNewLine(String str) {
+        if (str.charAt(str.length() - 1) == '\n') {
+            return str.substring(0, s.length() - 1);
+        }
+        return str;
+    }
+
     public static void main(String[] args) throws Exception {
         var task = new task();
         task.addJarFile("Vigenere.jar");
 
-        String plaintext = Files.readString(TEXT_FILENAME).toLowerCase();
-        String key = Files.readString(KEY_FILENAME).toLowerCase();
+        String plaintext = deleteEndNewLine(Files.readString(TEXT_FILENAME).toLowerCase());
+        String key = deleteEndNewLine(Files.readString(KEY_FILENAME).toLowerCase());
         var dataByWorker = prepareData(plaintext, key);
 
         var info = new AMInfo(task, null);
@@ -55,7 +62,7 @@ public class Bluck {
             var actualKey = key.substring(indx) + key.substring(0, indx);
             System.out.println(actualKey);
 
-            var data = new DataToEncrypt(str, key);
+            var data = new DataToEncrypt(str, actualKey);
             result.add(data);
 
             currPos += charPerWorker;
