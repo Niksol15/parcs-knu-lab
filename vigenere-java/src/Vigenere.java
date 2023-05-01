@@ -11,6 +11,7 @@ public class Vigenere implements AM {
             result += key;
         }
         result += key.substring(0, residue);
+        System.out.println(result);
 
         return result;
     }
@@ -36,8 +37,9 @@ public class Vigenere implements AM {
         for(int i = 0; i < data.plaintext.length(); ++i) {
             int x = (int)data.plaintext.charAt(i) - (int)'a';
             int y = (int)expandedKey.charAt(i) - (int)'a';
-            System.out.println(x);
-            System.out.println(y);
+            System.out.format("table[x = %d] = " + data.plaintext.charAt(i), x);
+            System.out.format("table[y = %d] = " + expandedKey.charAt(i), y);
+            System.out.format("table[%d][%d] = " + table[x][y], x, y);
             result += table[x][y];
         }
 
