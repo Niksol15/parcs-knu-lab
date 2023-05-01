@@ -17,9 +17,9 @@ out/Vigenere.jar: out/parcs.jar src/Vigenere.java src/DataToEncrypt.java
 	@rm -f src/Vigenere.class src/DataToEncrypt.class
 
 Vigenere: out/Vigenere.jar
-	@java -jar out/Vigenere.jar
+	java -jar out/Vigenere.jar
 
 build: ${JARS}
 
 run: build
-	@cd out && @java -cp 'parcs.jar:Bluck.jar' Bluck
+	@cd out && java -cp 'parcs.jar:Bluck.jar' Bluck

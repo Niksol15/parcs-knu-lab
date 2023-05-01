@@ -34,7 +34,11 @@ public class Vigenere implements AM {
         var table = buildTable();
         var result = new String();
         for(int i = 0; i < data.plaintext.length(); ++i) {
-            result += table[data.plaintext.charAt(i) - 'a'][expandedKey.charAt(i) - 'a'];
+            int x = (int)data.plaintext.charAt(i) - (int)'a';
+            int y = (int)expandedKey.charAt(i) - (int)'a';
+            System.out.println(x);
+            System.out.println(y);
+            result += table[x][y];
         }
 
         return result;
