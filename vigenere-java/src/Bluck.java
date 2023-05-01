@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
+
 import parcs.*;
 
 public class Bluck {
@@ -12,8 +13,8 @@ public class Bluck {
         var task = new task();
         task.addJarFile("Vigenere.jar");
 
-        String plaintext = Files.readString(TEXT_FILENAME);
-        String key = Files.readString(KEY_FILENAME);
+        String plaintext = Files.readString(TEXT_FILENAME).toLowerCase();
+        String key = Files.readString(KEY_FILENAME).toLowerCase();
         var dataByWorker = prepareData(plaintext, key);
 
         var info = new AMInfo(task, null);
@@ -28,7 +29,7 @@ public class Bluck {
 
         var encrypted = new String();
         System.out.println("Waiting for result...");
-        for (var c: channels) {
+        for (var c : channels) {
             var res = (String) c.readObject();
             encrypted += res;
         }
@@ -40,13 +41,26 @@ public class Bluck {
         var result = new LinkedList<DataToEncrypt>();
         var charPerWorker = plaintext.length() / WORKERS;
         int currPos = 0;
+        int endPos = 0;
         for (int i = 0; i < WORKERS; ++i) {
-            var data = new DataToEncrypt(plaintext, key);
+            if (currPos + charPerWorker > plaintext.length()) {
+                endPos = plaintext.length();
+            } else {
+                endPos = currPos + charPerWorker;
+            }
+            var str = plaintext.substring(currPos, endPos);
+            System.out.println(str);
+
+            var indx = currPos % key.length();
+            var actualKey = key.substring(indx) + key.substring(0, indx);
+            System.out.println(actualKey);
+
+            var data = new DataToEncrypt(str, key);
             result.add(data);
+
+            currPos += charPerWorker;
         }
 
         return result;
     }
-
-
 }

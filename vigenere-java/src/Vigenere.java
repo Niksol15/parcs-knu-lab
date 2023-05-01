@@ -1,15 +1,43 @@
 import parcs.*;
+
 import java.io.*;
 
 public class Vigenere implements AM {
-
-    String encrypt(DataToEncrypt data) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            System.out.println(ex);
+    private String expandKey(String key, int keySize) {
+        var iter = keySize / key.length();
+        var residue = keySize % key.length();
+        var result = new String();
+        for (int i = 0; i < iter; ++i) {
+            result += key;
         }
-        return data.plaintext;
+        result += key.substring(0, residue);
+
+        return result;
+    }
+
+
+    private char[][] buildTable() {
+        var tableSize = (int)'z' - (int)'a' + 1;
+        var table = new char[tableSize][tableSize];
+
+        for (int i = 0; i < tableSize; ++i) {
+            for (int j = 0; j < tableSize; ++j) {
+                table[i][j] = (char)('a' + (i + j) % tableSize);
+            }
+        }
+
+        return table;
+    }
+
+    private String encrypt(DataToEncrypt data) {
+        var expandedKey = expandKey(data.key, data.plaintext.length());
+        var table = buildTable();
+        var result = new String();
+        for(int i = 0; i < data.plaintext.length(); ++i) {
+            result += table[data.plaintext.charAt(i) - 'a'][expandedKey.charAt(i) - 'a'];
+        }
+
+        return result;
     }
 
 
